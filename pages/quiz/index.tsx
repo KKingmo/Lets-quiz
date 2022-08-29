@@ -42,8 +42,8 @@ export const getServerSideProps = async (context: Router) => {
   return {
     props: {
       dataQuiz,
-      category: context.query.category,
-      difficulty: context.query.difficulty,
+      category: data.results[0].category,
+      difficulty: data.results[0].difficulty,
     },
   };
 };
