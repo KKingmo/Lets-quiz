@@ -1,36 +1,22 @@
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import Button01 from "../../commons/buttons/01";
 import FormRadio from "../../commons/formRadio";
-
-const option = {
-  category: [
-    {
-      num: 9,
-      name: "일반 지식",
-    },
-    {
-      num: 21,
-      name: "스포츠",
-    },
-    {
-      num: 23,
-      name: "역사",
-    },
-  ],
-  difficulty: ["easy", "medium", "hard"],
-};
+import { OPTION } from "../../commons/quizOption/option";
 
 export default function QuizOption() {
   const router = useRouter();
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, watch } = useForm({
     mode: "onChange",
-    reValidateMode: "onChange",
+    defaultValues: { category: null, difficulty: null },
   });
 
+  const isValid = !watch(["category", "difficulty"]).includes(null);
+
   const handleSubmitClick = (data: {
-    category?: number;
-    difficulty?: string;
+    category?: number | null;
+    difficulty?: string | null;
   }) => {
     if (!data.category || !data.difficulty)
       return alert("난이도와 카테고리를 설정해주세요.");
@@ -42,7 +28,7 @@ export default function QuizOption() {
   return (
     <form onSubmit={handleSubmit(handleSubmitClick)}>
       <ul>
-        {option.category.map((el, idx) => (
+        {OPTION.category.map((el, idx) => (
           <FormRadio
             key={idx}
             register={register("category")}
@@ -52,7 +38,7 @@ export default function QuizOption() {
         ))}
       </ul>
       <ul>
-        {option.difficulty.map((el, idx) => (
+        {OPTION.difficulty.map((el, idx) => (
           <FormRadio
             key={idx}
             register={register("difficulty")}
@@ -61,7 +47,8 @@ export default function QuizOption() {
           />
         ))}
       </ul>
-      <button type="submit">퀴즈풀기</button>
+
+      <Button01 type="submit" disabled={!isValid} name="퀴즈풀기" />
     </form>
   );
 }
