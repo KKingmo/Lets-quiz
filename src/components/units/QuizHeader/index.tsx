@@ -1,5 +1,5 @@
 interface QuizHeaderProps {
-  category: number;
+  category: string;
   difficulty: string;
   stage: number;
 }

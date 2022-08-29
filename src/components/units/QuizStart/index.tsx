@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import DOMPurify from "dompurify";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import QuizHeader from "../QuizHeader";
 import QuizTimer from "../QuizTimer";
 import Button01 from "../../commons/buttons/01";
@@ -16,7 +16,7 @@ interface Quiz {
 
 interface QuizPageProps {
   dataQuiz: Quiz[];
-  category: number;
+  category: string;
   difficulty: string;
 }
 
@@ -28,6 +28,7 @@ export default function QuizStart(props: QuizPageProps) {
   const [myAnswer, setMyAnswer] = useState<string[]>([]);
   const [quizResult, setQuizResult] = useRecoilState(quizResultState);
   const router = useRouter();
+  const timeRef = useRef<number>(0);
 
   const handleAnswerClick = (answer: string, correctAnswer: string) => () => {
     if (isClicked) return;
@@ -45,6 +46,7 @@ export default function QuizStart(props: QuizPageProps) {
         difficulty,
         myAnswer,
         dataQuiz,
+        timeTaken: timeRef.current,
       };
       await setQuizResult([...quizResult, { [Date.now()]: _quizResult }]);
       return router.push("/result");
@@ -56,7 +58,7 @@ export default function QuizStart(props: QuizPageProps) {
   return (
     <div>
       <QuizHeader category={category} difficulty={difficulty} stage={stage} />
-      <QuizTimer />
+      <QuizTimer timeRef={timeRef} />
       <div>
         {stage} / {dataQuiz.length}
       </div>
@@ -70,7 +72,7 @@ export default function QuizStart(props: QuizPageProps) {
           }}
         />
       ) : (
-        <div />
+        <div></div>
       )}
 
       <ul>
@@ -87,7 +89,7 @@ export default function QuizStart(props: QuizPageProps) {
                 }}
               />
             ) : (
-              <span />
+              <span></span>
             )}
           </li>
         ))}
