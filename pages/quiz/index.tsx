@@ -10,7 +10,7 @@ interface Quiz {
 
 interface QuizPageProps {
   dataQuiz: Quiz[];
-  category: number;
+  category: string;
   difficulty: string;
 }
 

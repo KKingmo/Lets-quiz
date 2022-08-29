@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
+import { MutableRefObject, useEffect, useState } from "react";
 import { useInterval } from "../../commons/hooks/useInterval";
 
-export default function QuizTimer() {
+export default function QuizTimer({
+  timeRef,
+}: {
+  timeRef: MutableRefObject<number>;
+}) {
   const [timeCount, setTimeCount] = useState<number>(0);
 
   const setTimer = () => {
-    setTimeCount((prev) => prev + 1);
+    setTimeCount((timeRef.current += 1));
   };
 
   const [timerStart, timerPause] = useInterval(setTimer);
