@@ -1,12 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
-import DOMPurify from "dompurify";
-import { useRef, useState } from "react";
-import QuizHeader from "../QuizHeader";
-import QuizTimer from "../QuizTimer";
-import Button01 from "../../commons/buttons/01";
+import { useEffect, useRef, useState } from "react";
 import { quizResultState } from "../../commons/store";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
+import DOMPurify from "dompurify";
+import QuizHeader from "../QuizHeader";
+import QuizTimer from "../QuizTimer";
+import Button01 from "../../commons/buttons/01";
+import * as S from "./styles";
 
 interface Quiz {
   question: string;
@@ -26,9 +27,10 @@ export default function QuizStart(props: QuizPageProps) {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [myAnswer, setMyAnswer] = useState<string[]>([]);
+  const [isMount, setIsMount] = useState<boolean>(false);
   const [quizResult, setQuizResult] = useRecoilState(quizResultState);
-  const router = useRouter();
   const timeRef = useRef<number>(0);
+  const router = useRouter();
 
   const handleAnswerClick = (answer: string, correctAnswer: string) => () => {
     if (isClicked) return;
@@ -38,7 +40,7 @@ export default function QuizStart(props: QuizPageProps) {
     return setIsCorrect(true);
   };
 
-  const handleNextClick = async () => {
+  const handleNextClick = () => {
     setIsClicked((prev) => false);
     if (stage === dataQuiz.length) {
       const _quizResult = {
@@ -47,59 +49,86 @@ export default function QuizStart(props: QuizPageProps) {
         myAnswer,
         dataQuiz,
         timeTaken: timeRef.current,
+        scoreSheet: dataQuiz.map((el, idx) => {
+          if (el.correct_answer === myAnswer[idx]) return true;
+          return false;
+        }),
       };
-      await setQuizResult([...quizResult, { [Date.now()]: _quizResult }]);
+      setQuizResult([...quizResult, { [Date.now()]: _quizResult }]);
       return router.push("/result");
     }
     setStage((prev) => prev + 1);
     setIsCorrect(null);
   };
 
+  const preventClose = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
+
+  useEffect(() => {
+    setIsMount(true);
+    (() => {
+      window.addEventListener("beforeunload", preventClose);
+    })();
+
+    return () => {
+      window.removeEventListener("beforeunload", preventClose);
+    };
+  }, []);
+
   return (
-    <div>
+    <S.Wrapper>
       <QuizHeader category={category} difficulty={difficulty} stage={stage} />
       <QuizTimer timeRef={timeRef} />
-      <div>
-        {stage} / {dataQuiz.length}
-      </div>
-      <div>
-        {isCorrect !== null && (isCorrect ? "정답입니다" : "틀렸습니다")}
-      </div>
-      {typeof window !== "undefined" ? (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(dataQuiz[stage - 1].question),
-          }}
-        />
-      ) : (
-        <div></div>
-      )}
+      <S.StateBar state={stage / dataQuiz.length} />
+      <S.StageMessage isCorrect={isCorrect}>
+        <span>
+          {(isCorrect === null && "보기를 선택하세요.") ||
+            (isCorrect ? "정답이에요!" : "틀렸어요.")}
+        </span>
+        <span>
+          {stage} / {dataQuiz.length}
+        </span>
+      </S.StageMessage>
+      {isMount &&
+        (typeof window !== "undefined" ? (
+          <S.Question
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(dataQuiz[stage - 1]?.question),
+            }}
+          />
+        ) : (
+          <S.Question></S.Question>
+        ))}
 
-      <ul>
+      <S.AnswersWrapper>
         {dataQuiz[stage - 1].answers.map((e, idx) => (
-          <li
+          <S.Answer
             key={uuidv4()}
-            onClick={handleAnswerClick(e, dataQuiz[stage - 1].correct_answer)}
+            onClick={handleAnswerClick(e, dataQuiz[stage - 1]?.correct_answer)}
           >
             <span>{idx + 1}. </span>
-            {typeof window !== "undefined" ? (
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(e),
-                }}
-              />
-            ) : (
-              <span></span>
-            )}
-          </li>
+            {isMount &&
+              (typeof window !== "undefined" ? (
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(e),
+                  }}
+                />
+              ) : (
+                <span></span>
+              ))}
+          </S.Answer>
         ))}
-      </ul>
-
-      <Button01
-        onClick={handleNextClick}
-        disabled={isCorrect === null}
-        name="다음"
-      />
-    </div>
+      </S.AnswersWrapper>
+      <S.ButtonWrapper>
+        <Button01
+          onClick={handleNextClick}
+          disabled={isCorrect === null}
+          name="다음 >"
+        />
+      </S.ButtonWrapper>
+    </S.Wrapper>
   );
 }

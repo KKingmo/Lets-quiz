@@ -22,7 +22,8 @@
     "recoil-persist": "^4.2.0",
     "styled-components": "^5.3.5",
     "styled-reset": "^4.4.2",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "victory": "^36.6.5"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",

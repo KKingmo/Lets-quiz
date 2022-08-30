@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import Button01 from "../../commons/buttons/01";
 import FormRadio from "../../commons/formRadio";
 import { OPTION } from "../../commons/quizOption/option";
+import styled from "@emotion/styled";
 
 export default function QuizOption() {
   const router = useRouter();
@@ -27,7 +28,11 @@ export default function QuizOption() {
 
   return (
     <form onSubmit={handleSubmit(handleSubmitClick)}>
-      <ul>
+      <Title>
+        <span>아래의 퀴즈 분류와 난이도를 선택한 후</span>
+        <span>퀴즈풀기 버튼을 눌러주세요!</span>
+      </Title>
+      <Ul>
         {OPTION.category.map((el, idx) => (
           <FormRadio
             key={idx}
@@ -36,8 +41,8 @@ export default function QuizOption() {
             name={el.name}
           />
         ))}
-      </ul>
-      <ul>
+      </Ul>
+      <Ul>
         {OPTION.difficulty.map((el, idx) => (
           <FormRadio
             key={idx}
@@ -46,9 +51,39 @@ export default function QuizOption() {
             name={el}
           />
         ))}
-      </ul>
-
-      <Button01 type="submit" disabled={!isValid} name="퀴즈풀기" />
+      </Ul>
+      <ButtonWrapper>
+        <Button01
+          type="submit"
+          disabled={!isValid}
+          name="퀴즈풀기"
+          style={{ fontSize: "1.5rem" }}
+        />
+      </ButtonWrapper>
     </form>
   );
 }
+
+const Ul = styled.ul`
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+`;
+
+const Title = styled.h1`
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+  text-align: center;
+
+  span {
+    padding: 1rem 0;
+    font-size: 1.25rem;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+`;

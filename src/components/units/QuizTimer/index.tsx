@@ -1,5 +1,6 @@
 import { MutableRefObject, useEffect, useState } from "react";
 import { useInterval } from "../../commons/hooks/useInterval";
+import styled from "@emotion/styled";
 
 export default function QuizTimer({
   timeRef,
@@ -22,5 +23,18 @@ export default function QuizTimer({
     };
   }, []);
 
-  return <div>{timeCount}초</div>;
+  return (
+    <div>
+      <Span>소요시간 : {timeCount}초</Span>
+    </div>
+  );
 }
+
+const Span = styled.span`
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem 10px;
+  min-width: 120px;
+  color: #55f4cd;
+  font-size: 1.25rem;
+`;
