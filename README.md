@@ -105,3 +105,16 @@ yarn test
         ├── 📜globalStyles.ts  // 전역 스타일
         └── 📜media.ts    // 미디어 쿼리 tablet, mobile size 데이터
 ```
+
+---
+
+## Screen Preview
+
+- index 페이지
+  <img src="./readme_assets/index.gif" alt="index 페이지"/>
+
+- 퀴즈 풀기 페이지, 퀴즈 결과 페이지
+  <img src="./readme_assets/퀴즈풀기및결과.gif" alt="퀴즈풀기 및 결과 페이지"/>
+
+- 오답노트 페이지
+  <img src="./readme_assets/오답노트.gif" alt="오답노트 페이지"/>
