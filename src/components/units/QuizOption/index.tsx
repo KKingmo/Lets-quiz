@@ -4,6 +4,7 @@ import Button01 from "../../commons/buttons/01";
 import FormRadio from "../../commons/formRadio";
 import { OPTION } from "../../commons/quizOption/option";
 import styled from "@emotion/styled";
+import { breakPoints } from "../../../../styles/media";
 
 export default function QuizOption() {
   const router = useRouter();
@@ -15,15 +16,9 @@ export default function QuizOption() {
 
   const isValid = !watch(["category", "difficulty"]).includes(null);
 
-  const handleSubmitClick = (data: {
-    category?: number | null;
-    difficulty?: string | null;
-  }) => {
-    if (!data.category || !data.difficulty)
-      return alert("난이도와 카테고리를 설정해주세요.");
-    router.push(
-      `/quiz?category=${data.category}&difficulty=${data.difficulty}`
-    );
+  const handleSubmitClick = (data: { category?: number | null; difficulty?: string | null }) => {
+    if (!data.category || !data.difficulty) return alert("난이도와 카테고리를 설정해주세요.");
+    router.push(`/quiz?category=${data.category}&difficulty=${data.difficulty}`);
   };
 
   return (
@@ -34,31 +29,16 @@ export default function QuizOption() {
       </Title>
       <Ul>
         {OPTION.category.map((el, idx) => (
-          <FormRadio
-            key={idx}
-            register={register("category")}
-            value={el.num}
-            name={el.name}
-          />
+          <FormRadio key={idx} register={register("category")} value={el.num} name={el.name} />
         ))}
       </Ul>
       <Ul>
         {OPTION.difficulty.map((el, idx) => (
-          <FormRadio
-            key={idx}
-            register={register("difficulty")}
-            value={el}
-            name={el}
-          />
+          <FormRadio key={idx} register={register("difficulty")} value={el} name={el} />
         ))}
       </Ul>
       <ButtonWrapper>
-        <Button01
-          type="submit"
-          disabled={!isValid}
-          name="퀴즈풀기"
-          style={{ fontSize: "1.5rem" }}
-        />
+        <Button01 type="submit" disabled={!isValid} name="퀴즈풀기" style={{ fontSize: "1.5rem" }} />
       </ButtonWrapper>
     </form>
   );
@@ -67,7 +47,26 @@ export default function QuizOption() {
 const Ul = styled.ul`
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   padding: 2rem 0;
+
+  @media ${breakPoints.mobile} {
+    padding: 1rem 0;
+    li {
+      margin-bottom: 10px;
+    }
+
+    &:last-of-type {
+      ::before {
+        margin-bottom: 2rem;
+        content: "";
+        width: 80%;
+        height: 2px;
+        background-color: #d4d4d444;
+      }
+    }
+  }
 `;
 
 const Title = styled.h1`
