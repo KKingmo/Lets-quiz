@@ -20,11 +20,13 @@ export default function QuizHeader(props: QuizHeaderProps) {
 
 const Wrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   padding: 1rem 0;
 `;
 
 const Span = styled.span`
   display: inline-block;
+  margin-bottom: 10px;
   margin-right: 1rem;
   padding: 0.5rem 2rem;
   border-radius: 1rem;

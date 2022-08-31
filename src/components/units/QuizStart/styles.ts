@@ -48,8 +48,7 @@ export const StageMessage = styled.div`
       padding: 0.5rem 2rem;
       border-radius: 1rem;
       background-color: #fff;
-      color: ${({ isCorrect }: { isCorrect: boolean | null }) =>
-        isCorrect === null ? "#000" : isCorrect ? "#468ddf" : "#fe6768"};
+      color: ${({ isCorrect }: { isCorrect: boolean | null }) => (isCorrect === null ? "#000" : isCorrect ? "#468ddf" : "#fe6768")};
     }
 
     :last-of-type {

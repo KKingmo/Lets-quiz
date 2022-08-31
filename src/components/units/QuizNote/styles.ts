@@ -46,13 +46,6 @@ export const Aside = styled.aside`
     li {
       margin-left: 5px;
       margin-right: 5px;
-      width: calc(100% / 4 - 10px);
-    }
-  }
-
-  @media (max-width: 600px) {
-    li {
-      width: calc(100% / 3 - 10px);
     }
   }
 `;
