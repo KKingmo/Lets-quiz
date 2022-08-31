@@ -8,10 +8,13 @@ export const Wrapper = styled.div`
 
   @media (max-width: 991px) {
     flex-direction: column;
+    align-items: center;
   }
 `;
 
 export const Aside = styled.aside`
+  width: fit-content;
+
   ul {
     padding: 1rem;
   }
@@ -41,17 +44,21 @@ export const Aside = styled.aside`
     }
 
     li {
-      margin-right: 10px;
+      margin-left: 5px;
+      margin-right: 5px;
+      width: calc(100% / 4 - 10px);
+    }
+  }
 
-      :last-of-type {
-        margin-right: 0;
-      }
+  @media (max-width: 600px) {
+    li {
+      width: calc(100% / 3 - 10px);
     }
   }
 `;
 
 export const Section = styled.section`
-  padding: 1rem 0;
+  padding: 1rem 0.5rem;
 `;
 
 export const GradeText = styled.div`
@@ -142,7 +149,7 @@ export const Answers = styled.p`
 export const CorrectAnswer = styled.p`
   padding: 0.5rem;
   font-size: 1.25rem;
-  color: #d4d4d4;
+  color: #55f4cd;
 `;
 
 export const GuideText = styled.p`

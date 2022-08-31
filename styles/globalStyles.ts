@@ -5,6 +5,10 @@ import { breakPoints } from "./media";
 const GlobalStyle = createGlobalStyle`
     ${reset}
 
+    *{
+      box-sizing: border-box;
+    }
+
     body {
       min-height: 100vh;
       background: linear-gradient(180deg, #4823a6 0%, #c06dcf 100%);
