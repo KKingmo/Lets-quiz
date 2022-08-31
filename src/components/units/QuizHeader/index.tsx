@@ -10,7 +10,7 @@ export default function QuizHeader(props: QuizHeaderProps) {
   const { category, difficulty, stage } = props;
 
   return (
-    <Wrapper>
+    <Wrapper className="quiz-type">
       <Span>Quiz #{stage}</Span>
       <Span>{category}</Span>
       <Span>{difficulty}</Span>

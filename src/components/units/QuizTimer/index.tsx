@@ -2,11 +2,7 @@ import { MutableRefObject, useEffect, useState } from "react";
 import { useInterval } from "../../commons/hooks/useInterval";
 import styled from "@emotion/styled";
 
-export default function QuizTimer({
-  timeRef,
-}: {
-  timeRef: MutableRefObject<number>;
-}) {
+export default function QuizTimer({ timeRef }: { timeRef: MutableRefObject<number> }) {
   const [timeCount, setTimeCount] = useState<number>(0);
 
   const setTimer = () => {
@@ -25,7 +21,7 @@ export default function QuizTimer({
 
   return (
     <div>
-      <Span>소요시간 : {timeCount}초</Span>
+      <Span className="quiz-timer">소요시간 : {timeCount}초</Span>
     </div>
   );
 }

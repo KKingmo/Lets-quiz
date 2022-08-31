@@ -83,17 +83,15 @@ export default function QuizStart(props: QuizPageProps) {
       <QuizTimer timeRef={timeRef} />
       <S.StateBar state={stage / dataQuiz.length} />
       <S.StageMessage isCorrect={isCorrect}>
-        <span>
-          {(isCorrect === null && "보기를 선택하세요.") ||
-            (isCorrect ? "정답이에요!" : "틀렸어요.")}
-        </span>
-        <span>
+        <span className="quiz-message">{(isCorrect === null && "보기를 선택하세요.") || (isCorrect ? "정답이에요!" : "틀렸어요.")}</span>
+        <span className="quiz-stage">
           {stage} / {dataQuiz.length}
         </span>
       </S.StageMessage>
       {isMount &&
         (typeof window !== "undefined" ? (
           <S.Question
+            className="quiz-question"
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(dataQuiz[stage - 1]?.question),
             }}
@@ -102,12 +100,9 @@ export default function QuizStart(props: QuizPageProps) {
           <S.Question></S.Question>
         ))}
 
-      <S.AnswersWrapper>
+      <S.AnswersWrapper className="quiz-answers">
         {dataQuiz[stage - 1].answers.map((e, idx) => (
-          <S.Answer
-            key={uuidv4()}
-            onClick={handleAnswerClick(e, dataQuiz[stage - 1]?.correct_answer)}
-          >
+          <S.Answer key={uuidv4()} onClick={handleAnswerClick(e, dataQuiz[stage - 1]?.correct_answer)}>
             <span>{idx + 1}. </span>
             {isMount &&
               (typeof window !== "undefined" ? (
@@ -123,11 +118,7 @@ export default function QuizStart(props: QuizPageProps) {
         ))}
       </S.AnswersWrapper>
       <S.ButtonWrapper>
-        <Button01
-          onClick={handleNextClick}
-          disabled={isCorrect === null}
-          name="다음 >"
-        />
+        <Button01 onClick={handleNextClick} disabled={isCorrect === null} name="다음 >" />
       </S.ButtonWrapper>
     </S.Wrapper>
   );

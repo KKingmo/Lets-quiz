@@ -26,7 +26,7 @@ export default function QuizNote() {
   return (
     <S.Wrapper>
       <S.Aside>
-        <ul>
+        <ul className="note-list">
           {resultKeys.map((el, idx) => (
             <li key={uuidv4()} onClick={handleListClick(resultKeys.length - idx - 1, el)} className={showResult[1] === el ? "isActive" : ""}>
               <span>{elapsedTime(+el)}</span>
