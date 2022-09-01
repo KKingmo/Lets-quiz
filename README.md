@@ -18,13 +18,19 @@ git clone https://github.com/KKingmo/classting-assignment.git
 yarn install
 ```
 
-3. start
+3. build
+
+```bash
+yarn build
+```
+
+4. start
 
 ```bash
 yarn start
 ```
 
-4. test
+5. test
 
 ```bash
 yarn test
