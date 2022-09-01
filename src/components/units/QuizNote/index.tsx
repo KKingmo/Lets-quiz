@@ -86,7 +86,16 @@ export default function QuizNote() {
               </S.AnswersWrapper>
 
               <S.CorrectAnswer>
-                정답 : <b>{e.correct_answer}</b>
+                정답 :{" "}
+                {typeof window !== "undefined" ? (
+                  <b
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(e.correct_answer),
+                    }}
+                  />
+                ) : (
+                  <b />
+                )}
               </S.CorrectAnswer>
             </S.ResultWrapper>
           ))}
