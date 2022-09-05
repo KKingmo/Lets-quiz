@@ -1,4 +1,4 @@
-# 클래스팅 채용과제 - 퀴즈 웹앱
+# 퀴즈 웹앱
 
 [결과물을 실행해 볼수 있는 URL](https://classting-assignment-delta.vercel.app/)
 
