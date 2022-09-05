@@ -1,6 +1,11 @@
-# 퀴즈 웹앱
+# Let's Quiz
 
 [결과물을 실행해 볼수 있는 URL](https://classting-assignment-delta.vercel.app/)
+
+---
+
+## 프로젝트 설명
+다양한 영어 퀴즈를 풀어보고 오답노트까지 확인할 수 있는 웹앱 입니다.
 
 ---
 
