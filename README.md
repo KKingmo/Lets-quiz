@@ -9,7 +9,7 @@
 1. git clone
 
 ```bash
-git clone https://github.com/KKingmo/classting-assignment.git
+git clone https://github.com/KKingmo/Lets-quiz.git
 ```
 
 2. install
